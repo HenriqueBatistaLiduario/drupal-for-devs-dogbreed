@@ -1,0 +1,7 @@
+dogbreed.settings:
+  path: '/admin/config/dogbreed'
+  defaults:
+    _form: '\Drupal\dogbreed\Form\DogBreedSettingsForm'
+    _title: 'Dog Breed Settings'
+  requirements:
+    _permission: 'administer site configuration'

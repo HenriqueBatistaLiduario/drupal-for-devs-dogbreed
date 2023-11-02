@@ -1,0 +1,11 @@
+uuid: 91c707a7-1242-426b-9e06-be77049134c4
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Dog Breeds'
+type: ctype_dogbreed
+description: 'Registration of dogs and their breeds'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

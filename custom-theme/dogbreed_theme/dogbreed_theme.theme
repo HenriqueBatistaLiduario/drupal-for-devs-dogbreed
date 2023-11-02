@@ -1,0 +1,72 @@
+<?php
+
+use Drupal\node\Entity\Node;
+use Drupal\taxonomy\Entity\Term;
+use GuzzleHttp\Client;
+use Drupal\views\Views;
+use Drupal\views\Entity\View;
+use Drupal\Core\Extension\ModuleHandlerInterface;
+
+function dogbreed_preprocess_html(&$variables) {
+  $variables['#attached']['library'][] = 'dogbreed_theme/bootstrap-5.0';
+}
+
+function dogbreed_preprocess_page(&$variables) {
+
+  $moduleHandler = \Drupal::service('module_handler');
+  if ($moduleHandler->moduleExists('dogbreed')) {
+    $variables['preprocessPage']['installedModule'] = 1;
+
+    //Obtém o valor de configuração definido pelo administrador:
+    $configFactory = \Drupal::configFactory();
+    $config = $configFactory->get('dogbreed.settings');
+    $standardDogBreed = $config->get('standard_dog_breed');
+
+    if (isset($standardDogBreed)) {
+      //Disponibiliza a variável para ser consumida pelo Twig:
+      $variables['preprocessPage']['standardDogBreed'] = $standardDogBreed;
+    } else {
+      $variables['preprocessPage']['standardDogBreed'] = 0;
+    }
+
+    //Seção Dogs
+    $viewDogs = Views::getView('view_custom_dogbreeds');
+    if ($viewDogs) {
+      $viewDogs->setDisplay('default');
+      $viewDogs->execute();
+      $viewDogs_result = $viewDogs->result;
+
+      if (!empty($viewDogs_result)) {
+
+        foreach($viewDogs_result as $key => $item){
+
+          $dog = $item->_entity->toArray();
+
+          $term = Term::load($dog['breed_name'][0]['target_id']);
+
+          if (!is_null($term)) {
+            $breedTerm = $term->toArray();
+            //Regra percebida na API: Ainda que hajam subraças, o endpoint de imagens randômicas só aceita a raça.
+            //Caso seja cadastrado um cão de subraça, explodi o termo para que passe apenas a raça.
+            $ExplosionBreedName = explode("-",$breedTerm['name'][0]['value']);
+            $breedName = trim($ExplosionBreedName[0]);
+            $variables['preprocessPage']['dogs'][$key]['breedName'] = $breedTerm['name'][0]['value'];
+
+            $client = new Client();
+            $response = $client->get("https://dog.ceo/api/breed/$breedName/images/random");
+            $data = json_decode($response->getBody(), true);
+            $imageUrl = $data['message'];
+            $variables['preprocessPage']['dogs'][$key]['imgUrl']  = $imageUrl;
+          }
+
+          $variables['preprocessPage']['dogs'][$key]['urlNode'] = '/node/'.$dog['nid'][0]['value'];
+          $variables['preprocessPage']['dogs'][$key]['popularName'] = $dog['title'][0]['value'];
+          $variables['preprocessPage']['dogs'][$key]['created'] = date('d/m/Y H:i', $dog['created'][0]['value']);
+
+        }
+      }
+    }
+  } else {
+    $variables['preprocessPage']['installedModule'] = 0;
+  }
+}

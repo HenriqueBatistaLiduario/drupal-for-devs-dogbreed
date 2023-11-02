@@ -1,0 +1,107 @@
+<?php
+
+use Drupal\taxonomy\Entity\Vocabulary;
+use Drupal\node\Entity\NodeType;
+use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Entity\EntityFieldManager;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Messenger\MessengerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\field\Entity\FieldStorageConfig;
+use Drupal\field\Entity\FieldConfig;
+use Drupal\views\Views;
+use Drupal\views\Entity\View;
+
+/**
+ * Implements hook_install().
+ */
+function dogbreed_install() {
+  $content_type = 'ctype_dogbreed';
+  // Cria o tipo de conteúdo se ainda não existir.
+  if (!NodeType::load($content_type)) {
+    $content_type_data = [
+      'type' => $content_type,
+      'name' => 'Dog Breeds',
+      'description' => 'Registration of dogs and their breeds',
+      'display_submitted' => TRUE,
+      'new_revision' => TRUE,
+    ];
+
+    $node_type = NodeType::create($content_type_data);
+    if ($node_type->save()) {
+      // Adiciona uma mensagem de sucesso.
+      \Drupal::messenger()->addStatus(t('Tipo de conteúdo %type criado com sucesso.', ['%type' => $content_type]));
+    }
+  } else {
+    // Adiciona uma mensagem de aviso caso o Tipo de Conteúdo já exista.
+    \Drupal::messenger()->addWarning(t('Tipo de conteúdo %type já existe.', ['%type' => $content_type]));
+  }
+
+  $taxonomy_vid = 'taxonomies_dogbreeds';
+  // Cria o vocabulário se ainda não existir.
+  if (!Vocabulary::load($taxonomy_vid)) {
+    $vocabulary = Vocabulary::create([
+      'vid' => $taxonomy_vid,
+      'name' => 'Dog Breeds',
+      'description' => 'Vocabulary for dog breeds.',
+    ]);
+    if ($vocabulary->save()) {
+      // Adiciona uma mensagem de sucesso.
+      \Drupal::messenger()->addStatus(t('Vocabulário %type criado com sucesso.', ['%type' => $taxonomy_vid]));
+    }
+  } else {
+    // Adiciona uma mensagem de aviso caso o Vocabulário já exista.
+    \Drupal::messenger()->addWarning(t('Vocabulário %type já existe.', ['%type' => $taxonomy_vid]));
+  }
+
+  // Cria o campo de referência ao termo de taxonomia.
+  $term_field_name = 'breed_name';
+  createFieldReference($term_field_name, 'Dog Breed', $taxonomy_vid, $content_type);
+
+  // Adiciona uma mensagem de sucesso.
+  \Drupal::messenger()->addStatus(t('Instalação do módulo DogBreed realizada com sucesso.'));
+}
+
+/**
+ * Cria um campo de referência ao termo de taxonomia.
+ */
+function createFieldReference($field_name, $label, $target_bundle, $bundle) {
+  // Define o campo de referência de taxonomia.
+  $field_storage = FieldStorageConfig::create([
+    'field_name' => $field_name,
+    'entity_type' => 'node', // Ou 'user' ou outro tipo de entidade.
+    'type' => 'entity_reference',
+    'cardinality' => 1, // 1 para um único valor, -1 para valores ilimitados.
+    'settings' => [
+      'target_type' => 'taxonomy_term'
+    ],
+  ]);
+  $field_storage->save();
+
+  // Define a instância do campo no tipo de conteúdo desejado.
+  $field_instance = FieldConfig::create([
+    'field_name' => $field_name,
+    'entity_type' => 'node', // Ou 'user' ou outro tipo de entidade.
+    'bundle' => $bundle, // Tipo de conteúdo.
+    'label' => $label,
+    'required' => TRUE,
+    'settings' => [
+      'handler' => 'default:taxonomy_term',
+      'handler_settings' => [
+        'target_bundles' => [$target_bundle], //VID do vocabulário
+      ],
+    ],
+  ]);
+  $field_instance->save();
+}
+
+/**
+ * Altera o label do campo title para "Popular Name".
+ */
+function dogbreed_entity_base_field_info_alter(&$fields, EntityTypeInterface $entity_type) {
+  if ($entity_type->id() === 'node' && $entity_type->getBundleOf() === 'ctype_dogbreed') {
+    if (isset($fields['title'])) {
+      $fields['title']->setLabel('Popular Name');
+    }
+  }
+}

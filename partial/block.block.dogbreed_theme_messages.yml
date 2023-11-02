@@ -1,0 +1,22 @@
+uuid: a2f99fde-3260-4ffb-83f9-c66c4cb2986f
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: BZ5tpW7H8X4PVGRm3MImTIHd2tN0eF7zOtp4SpRYUA0
+id: dogbreed_theme_messages
+theme: dogbreed_theme
+region: highlighted
+weight: -5
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Mensagens de estado'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,5 @@
+name: 'Custom Mail Redirect'
+type: module
+description: 'Redireciona todos os e-mails para nope@doesntexist.com'
+core_version_requirement: ^8 || ^9
+package: Custom

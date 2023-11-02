@@ -1,0 +1,22 @@
+uuid: 4a432e9c-c71f-41a0-a6ef-39810ccae364
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: erQSEZF2XUjNmgTl0uNRBzmg18ZGXwUcw2FhApoeuHk
+id: dogbreed_theme_content
+theme: dogbreed_theme
+region: content
+weight: 0
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Conteúdo da página principal'
+  label_display: '0'
+  provider: system
+visibility: {  }

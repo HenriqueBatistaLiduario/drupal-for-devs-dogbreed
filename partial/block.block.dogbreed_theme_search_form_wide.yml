@@ -1,0 +1,23 @@
+uuid: 8628985d-6d47-4a59-b124-81fb0ee131c1
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: imMyHD6LYci0gtXq56qr9ZKGHzbEG9uFydrN5EhKtSU
+id: dogbreed_theme_search_form_wide
+theme: dogbreed_theme
+region: secondary_menu
+weight: -5
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Formulário de pesquisa (amplo)'
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

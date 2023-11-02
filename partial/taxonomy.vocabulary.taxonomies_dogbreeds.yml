@@ -1,0 +1,8 @@
+uuid: 16d90a05-3b38-44ce-8a7e-32da211032b2
+langcode: pt-pt
+status: true
+dependencies: {  }
+name: 'Dog Breeds'
+vid: taxonomies_dogbreeds
+description: 'Vocabulary for dog breeds.'
+weight: 0

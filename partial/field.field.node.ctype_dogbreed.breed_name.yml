@@ -1,0 +1,24 @@
+uuid: 71ac2f1f-241d-4345-a0a7-f8d63455d921
+langcode: pt-pt
+status: true
+dependencies:
+  config:
+    - field.storage.node.breed_name
+    - node.type.ctype_dogbreed
+    - taxonomy.vocabulary.taxonomies_dogbreeds
+id: node.ctype_dogbreed.breed_name
+field_name: breed_name
+entity_type: node
+bundle: ctype_dogbreed
+label: 'Dog Breed'
+description: ''
+required: true
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:taxonomy_term'
+  handler_settings:
+    target_bundles:
+      - taxonomies_dogbreeds
+field_type: entity_reference

@@ -1,0 +1,9 @@
+bootstrap-5.0:
+  version: 5.0.2
+  css:
+    theme:
+      /libraries/bootstrap-5.0/dist/css/bootstrap.min.css: {}
+  js:
+    /libraries/bootstrap-5.0/dist/js/bootstrap.min.js: {}
+
+

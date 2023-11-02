@@ -1,0 +1,3 @@
+dogbreed_theme.settings:
+  type: theme_settings
+  label: 'Dog Breed theme settings'

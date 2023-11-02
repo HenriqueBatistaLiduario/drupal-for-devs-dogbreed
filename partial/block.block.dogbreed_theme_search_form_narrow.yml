@@ -1,0 +1,23 @@
+uuid: 4239a473-e158-4a9a-8706-b8168f92bafc
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - search
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: yEBET0cqDbk8dkWzaJw-8CKft0961VBflsISoSR6Lj8
+id: dogbreed_theme_search_form_narrow
+theme: dogbreed_theme
+region: primary_menu
+weight: -4
+provider: null
+plugin: search_form_block
+settings:
+  id: search_form_block
+  label: 'Formulário de pesquisa (estreito)'
+  label_display: '0'
+  provider: search
+  page_id: ''
+visibility: {  }

@@ -1,0 +1,22 @@
+<?php
+
+use Drupal\Core\Mail\MailManagerInterface;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\DependencyInjection\ContainerInjectionInterface;
+
+/**
+ * Implements hook_mail().
+ */
+function custom_mail_redirect_mail($key, &$message, $params) {
+  // Redireciona todos os e-mails para o endereço especificado.
+  $message['to'] = 'nope@doesntexist.com';
+}
+
+/**
+ * Implements hook_mail_alter().
+ */
+function custom_mail_redirect_mail_alter(array &$message) {
+  // Anula o envio real de e-mails.
+  $message['send'] = FALSE;
+}

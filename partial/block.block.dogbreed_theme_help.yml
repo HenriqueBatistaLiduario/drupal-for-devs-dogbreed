@@ -1,0 +1,22 @@
+uuid: 7edc970f-0b10-4eef-ac9c-9605ffeae59c
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - help
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: VfPFqqxfkomud5CO8DUijw85QIl9GIxh_nIxLOYESxg
+id: dogbreed_theme_help
+theme: dogbreed_theme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: help_block
+settings:
+  id: help_block
+  label: Ajuda
+  label_display: '0'
+  provider: help
+visibility: {  }

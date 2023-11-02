@@ -1,0 +1,20 @@
+uuid: d3147919-20c5-4c1e-a783-10c7342a6c8e
+langcode: pt-pt
+status: true
+dependencies:
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: Q9_2whdOj1YIomfvsIfopROW4FT_X5pY0DjdOiOaQ5U
+id: dogbreed_theme_primary_admin_actions
+theme: dogbreed_theme
+region: highlighted
+weight: -5
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Ações principais do administrador'
+  label_display: '0'
+  provider: core
+visibility: {  }

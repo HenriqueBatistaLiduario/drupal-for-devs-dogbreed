@@ -1,0 +1,68 @@
+{% include '@dogbreed_theme/includes/header.html.twig' %}
+
+{% block content %}
+
+  <main>
+    <div class="container">
+      {% if preprocessPage.installedModule == 1 %}
+
+        <section class="section" id="section-standard-breed">
+          {% if preprocessPage.standardDogBreed != 0 %}
+          <div class="card text-center">
+            <div class="card-header">
+              Raça padrão definida pelo administrador
+            </div>
+            <div class="card-body">
+              <h3 class="card-title">{{ preprocessPage.standardDogBreed }}</h3>
+              {# Renderizar o bloco diretamente no template usando o Twig Tweak #}
+              {{ drupal_block('dogbreed_block') }}
+              <p class="card-text text-muted mt-3">Imagem aleatória, obtida da API, referente a raça padrão definida pelo administrador.</p>
+            </div>
+            <div class="card-footer text-muted">
+              O cache desse bloco está desabilitado, devido a necessidade de randomização.
+            </div>
+          </div>
+
+          {% else %}
+            <div class="alert alert-warning" role="alert">
+              Nenhuma raça padrão foi definida pelo administrador.
+            </div>
+          {% endif %}
+        </section>
+
+        <section class="section m-0 p-0" id="section-dogs-home">
+
+          <div class="row mt-5" id="custom-row-dogs-home">
+
+            {% for dog in preprocessPage.dogs %}
+              <div class="col-6 col-xs-12">
+                <div class="card mb-3">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <img src="{{ dog.imgUrl }}" class="img-fluid rounded-start" alt="{{ dog.breedName }}">
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <h5 class="card-title">Nome popular: <b>{{ dog.popularName }}</b></h5>
+                        <p class="card-text">Raça: <b>{{ dog.breedName }}</b></p>
+                        <p class="card-text"><small class="text-muted">Data de Registo: <b>{{ dog.created }}</b></small></p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </section>
+
+      {% else %}
+        <div class="alert alert-warning" role="alert">
+          O módulo <b>dogbreed</b>, fundamental para exibir conteúdo nesse tema, não está instalado.
+        </div>
+      {% endif %}
+    </div>
+  </main>
+
+{% endblock %}
+
+{% include '@dogbreed_theme/includes/footer.html.twig' %}

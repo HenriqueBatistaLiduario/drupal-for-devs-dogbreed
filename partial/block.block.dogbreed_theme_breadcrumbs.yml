@@ -1,0 +1,22 @@
+uuid: de0b9041-3f5a-4b19-9769-39e224a7d619
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: VhBzWb7lMRtIOg9G7VSw_0uopi-7zXeHq4vXqqV1HFE
+id: dogbreed_theme_breadcrumbs
+theme: dogbreed_theme
+region: breadcrumb
+weight: 0
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: 'Navegação estruturada'
+  label_display: '0'
+  provider: system
+visibility: {  }

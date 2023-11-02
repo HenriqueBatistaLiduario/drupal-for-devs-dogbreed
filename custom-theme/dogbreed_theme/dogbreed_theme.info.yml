@@ -1,0 +1,10 @@
+name: Dog Breed Theme
+type: theme
+description: "Custom frontend for devoteam's challenge"
+version: VERSION
+core: 8.x
+core_version_requirement: ^8 || ^9
+base theme: bootstrap_barrio
+
+libraries:
+  - dogbreed_theme/bootstrap-5.0

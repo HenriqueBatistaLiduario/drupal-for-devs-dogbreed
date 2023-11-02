@@ -1,0 +1,22 @@
+uuid: e08c73d6-0225-49da-86b3-21d6f12e6fdd
+langcode: pt-pt
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - dogbreed_theme
+_core:
+  default_config_hash: eYL19CLDyinGTWYQfBD1DswWzglEotE_kHnHx3AxTXM
+id: dogbreed_theme_powered
+theme: dogbreed_theme
+region: sidebar_first
+weight: 0
+provider: null
+plugin: system_powered_by_block
+settings:
+  id: system_powered_by_block
+  label: 'Energizado com Drupal'
+  label_display: '0'
+  provider: system
+visibility: {  }
